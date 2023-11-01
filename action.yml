@@ -1,0 +1,21 @@
+name: "Get pyproject version"
+description: "Get the version from pyproject.toml"
+inputs:
+  path:
+    description: "Path to pyproject.toml"
+    required: true
+    default: ""
+outputs:
+  version:
+    description: "Version from pyproject.toml"
+    value: ${{ steps.get_version.outputs.version }}
+runs:
+  using: "composite"
+  steps:
+    -
+      name: Get version
+      id: get_version
+      shell: bash
+      run: |
+        VERSION=$(grep 'version =' ${{ inputs.path }}/pyproject.toml | awk -F'"' '{print $2}')
+        echo "APP_VERSION=$VERSION" >> "$GITHUB_OUTPUT"
