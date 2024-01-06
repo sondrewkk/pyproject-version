@@ -17,5 +17,5 @@ runs:
       id: get_version
       shell: bash
       run: |
-        VERSION=$(grep 'version =' ${{ inputs.path }}/pyproject.toml | awk -F'"' '{print $2}')
+        VERSION=$(grep '^version =' ${{ inputs.path }}/pyproject.toml | awk -F'"' '{print $2}')
         echo "APP_VERSION=$VERSION" >> "$GITHUB_OUTPUT"
